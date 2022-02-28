@@ -1,0 +1,155 @@
+//Variables
+var score = 0;
+
+//Create Sprites--------------------------------------------------------
+
+//player sprite
+var player = createSprite(200, 200);
+player.setAnimation("alien");
+//player.velocityY = 4;
+
+//First Sprite
+var platform1 = createSprite(100, 150);
+platform1.setAnimation("platform");
+platform1.velocityY = 2;
+
+//Second Sprite
+var platform2 = createSprite(300, 150);
+platform2.setAnimation("platform");
+platform2.velocityY = 1;
+
+//Item Sprites
+//First Item Sprite
+var star = createSprite(400, 400);
+star.setAnimation("star");
+star.velocityY = 1.5;
+
+//Second Item Sprite
+var star2 = createSprite(400, 400);
+star2.setAnimation("star");
+star2.velocityY = 3;
+
+//Functions--------------------------------------------------------
+function draw() {
+  // draw the background
+  if (score < 25) {
+    background1();
+  } 
+  /*
+  else {
+    background2();
+  }
+  */
+  showScore(true);
+  loopPlatforms1();
+  loopPlatforms2();
+  loopPlatforms3();
+  loopPlatforms4();
+  controlPlayer();
+  //playerFall();
+  drawSprites();
+  playerLands();
+  playerFall();
+  collectItems();
+}
+
+function background1() {
+  background("black");
+  noStroke();
+  fill("yellow");
+  ellipse(randomNumber(0, 400), randomNumber(0, 400), 3, 3);
+  ellipse(randomNumber(0, 400), randomNumber(0, 400), 3, 3);
+  ellipse(340, 50, 60, 60);
+  fill("black");
+  ellipse(320, 30, 60, 60);
+  }
+/*
+function background2() {
+  background("pink");
+  noStroke();
+  fill("darkblue");
+  ellipse(randomNumber(0, 400), randomNumber(0, 400), 3, 3);
+  ellipse(randomNumber(0, 400), randomNumber(0, 400), 3, 3);
+  ellipse(340, 50, 60, 60);
+  fill("pink");
+  ellipse(320, 30, 60, 60);
+  }
+*/
+function showScore() {
+  fill("white");
+  textSize(20);
+  text("Score: " + score, 8, 20);
+  }
+
+//Function Loops - Sprite 1
+function loopPlatforms1() {
+  if (platform1.y > 440) {
+    platform1.y = -40;
+  }
+}
+
+//Function Loops - Sprite 2
+function loopPlatforms2() {
+  if (platform2.y > 410) {
+    platform2.y = -10;
+  }
+}
+
+function loopPlatforms3() {
+  if (star.y > 400) {
+    star.y = 0;
+    star.x = randomNumber(0, 400);
+  }
+}
+
+function loopPlatforms4() {
+  if (star2.y > 400) {
+    star2.y = 0;
+    star2.x = randomNumber(0, 400);
+  }
+}
+
+function playerFall() {
+  if (player.y > 400) {
+    player.y = 0;
+    //player.velocityY = player.velocityY + 1 ;
+  }
+}
+
+function controlPlayer() {
+  if (keyDown("up")) {
+    player.y = player.y - 7;
+  }
+  
+  if (keyDown("down")) {
+    player.y = player.y + 5;
+  }
+  
+  if (keyDown("left")) {
+    player.x = player.x - 5;
+  }
+  
+  if (keyDown("right")) {
+    player.x = player.x + 5;
+  }
+}
+
+function playerLands() {
+  player.collide(platform1);
+  player.collide(platform2);
+}
+
+function collectItems() {
+  if (player.isTouching(star)) {
+    star.y = 0;
+    star.x = randomNumber(0, 400);
+  }
+  if (player.isTouching(star2)) {
+    star2.y = 0;
+    star2.x = randomNumber(0, 400);
+  }
+}
+
+
+
+
