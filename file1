@@ -1,0 +1,45 @@
+import smtplib
+import schedule
+import time
+from email.mime.text import MIMEText
+from email.mime.image import MIMEImage
+from email.mime.application import MIMEApplication
+from email.mime.multipart import MIMEMultipart
+import os
+import imghdr
+from email.message import EmailMessage
+
+EMAIL_ADDRESS = os.environ.get('DB_USER')
+EMAIL_PASSWORD = os.environ.get('DB_PASSWORD')
+
+def mailer():
+
+    msg = EmailMessage()
+    msg['Subject'] = 'Test'
+    msg['From'] = EMAIL_ADDRESS
+    msg['To'] = 'ionova272001@gmail.com'
+    msg.set_content('testing')
+
+    for i in range(0, 1):
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+            smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+            smtp.send_message(msg)
+
+schedule.every().day.at("13:17").do(mailer)
+
+while True:
+    schedule.run_pending()
+    time.sleep(1)
+
+#Send Multiple Images
+#files = ['C:\Visual Studio Coding\Python Folder Code\Images\heart_1.jpg', 'C:\Visual Studio Coding\Python Folder Code\Images\heart_2.jpg']
+
+#for file in files:
+    #with open(file, 'rb') as f:
+        #file_data = f.read()
+        #file_type = imghdr.what(f.name)
+        #file_name = f.name
+
+    #msg.add_attachment(file_data, maintype='image', subtype=file_type, filename=file_name)
+
+
