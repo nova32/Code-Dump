@@ -1,0 +1,20 @@
+import random
+
+number_list = [1, 2, 3]
+
+print("List before shuffle: ", str(number_list))
+print("Guess the list order, and write it exactly how it's presented in the shuffle")
+
+random.shuffle(number_list)
+
+guessAn = input()
+
+
+while (guessAn != str(number_list)):
+    print("Close one! Try again")
+    guessAn = input()
+
+    if (guessAn == str(number_list)):
+        print("Good Job, here's the number list: " + str(number_list))
+        break
+
